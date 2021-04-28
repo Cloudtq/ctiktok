@@ -1,49 +1,43 @@
 <template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view>
-			<text class="title">{{title}}</text>
-		</view>
-	</view>
+  <view class="content">
+    <first-nav></first-nav>
+    <video-list :list='list'></video-list>
+    <tab-bar></tab-bar>
+  </view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				title: 'Hello'
-			}
-		},
-		onLoad() {
-
-		},
-		methods: {
-
-		}
-	}
+import tabBar from '../../components/tab'
+import firstNav from '../../components/first-nav'
+import videoList from '../../components/videoList'
+export default {
+  data() {
+    return {
+      title: 'Hello',
+      list: [],
+    }
+  },
+  components: {
+    tabBar,
+    firstNav,
+    videoList,
+  },
+  beforeCreate() {
+    uni.request({
+      url: 'http://localhost:3000/data',
+      success: (res) => {
+        this.list = res.data.list
+      },
+    })
+  },
+  FirstNavonLoad() {},
+  methods: {},
+}
 </script>
 
 <style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin: 200rpx auto 50rpx auto;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
+.content {
+  width: 100%;
+  height: 100%;
+}
 </style>
